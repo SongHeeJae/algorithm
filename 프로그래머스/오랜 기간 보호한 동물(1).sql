@@ -1,0 +1,1 @@
+SELECT ai.name, ai.datetime FROM ANIMAL_INS ai LEFT JOIN ANIMAL_OUTS ao ON ai.animal_id = ao.animal_id ORDER BY ao.datetime ASC, ai.datetime ASC LIMIT 3;
