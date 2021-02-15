@@ -25,18 +25,11 @@ bool insert(int root, vector<int>& item, vector<vector<int>>& nodeinfo) {
     return false;
 }
 
-void preorder(int node) {
+void order(int node) {
     if(node != -1) {
         pre.push_back(node+1);
-        preorder(trees[node].first);
-        preorder(trees[node].second);
-    }
-}
-
-void postorder(int node) {
-    if(node != -1) {
-        postorder(trees[node].first);
-        postorder(trees[node].second);
+        order(trees[node].first);
+        order(trees[node].second);
         post.push_back(node+1);
     }
 }
@@ -49,8 +42,7 @@ vector<vector<int>> solution(vector<vector<int>> nodeinfo) {
     sort(nodes.begin(), nodes.end(), comp);
     for(int i=1; i<nodes.size(); i++)
         insert(nodes[0][0], nodes[i], nodeinfo);
-    preorder(nodes[0][0]);
-    postorder(nodes[0][0]);
+    order(nodes[0][0]);
     return {pre, post};
 }
 
