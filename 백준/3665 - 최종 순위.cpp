@@ -18,8 +18,10 @@ int main() {
 		memset(indegree, 0, sizeof(indegree));
 		res.clear();
 		scanf("%d", &n);
-		for (int i = 1; i <= n; i++) graph[i].clear();
-		for (int i = 1; i <= n; i++) scanf("%d", &arr[i]);
+		for (int i = 1; i <= n; i++) {
+            scanf("%d", &arr[i]);
+            graph[i].clear();   
+        }
 		scanf("%d", &m);
 		for (int i = 0; i < m; i++) {
 			scanf("%d %d", &a, &b);
