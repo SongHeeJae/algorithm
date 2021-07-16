@@ -4,29 +4,24 @@
 using namespace std;
 
 vector<pair<int, int>> xa;
-int n, x, a;
-long long ls[100000], rs[100000], diff = 1e10;
-
+int n, x, a, idx = -1;
+long long diff = 1e10, s1 = 0, s2 = 0;
 int main() {
 	scanf("%d", &n);
 	for (int i = 0; i < n; i++) {
 		scanf("%d %d", &x, &a);
 		xa.push_back({ x, a });
+		s1 += a;
 	}
 	sort(xa.begin(), xa.end());
-	ls[0] = xa[0].second;
-	rs[n - 1] = xa[n - 1].second;
-	for (int i = 1; i < n; i++) {
-		ls[i] = xa[i].second + ls[i - 1];
-		rs[n - 1 - i] = xa[n - 1 - i].second + rs[n - i];
-	}
-	int idx = -1;
 	for (int i = 0; i < n; i++) {
-		long long d = abs(rs[i] - ls[i]);
+		s2 += xa[i].second;
+		long long d = abs(s1 - s2);
 		if (diff > d) {
 			idx = i;
 			diff = d;
 		}
+		s1 -= xa[i].second;
 	}
 	printf("%d", xa[idx].first);
 }
