@@ -1,30 +1,34 @@
 #include <iostream>
 #include <algorithm>
-#include <vector>
 using namespace std;
 
+int n, arr[501][501] = { 0 }, ans = 0;
+
 int main() {
-	int n, a;
 	scanf("%d", &n);
-	vector<vector<int>> p(n, vector<int>(n, 0));
 
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j <= i; j++)
-			scanf("%d", &p[i][j]);
-
-	vector<vector<int>> s(n, vector<int>(n, 0));
-	s[0][0] = p[0][0];
-	int maxValue = -1;
-	for (int i = 1; i < n; i++) {
-		for (int j = 0; j <= i; j++) {
-			if (j == 0) s[i][j] = s[i - 1][j] + p[i][j];
-			else if (j == i) s[i][j] = s[i - 1][j - 1] + p[i][j];
-			else s[i][j] = max(s[i - 1][j - 1], s[i - 1][j]) + p[i][j];
-			maxValue = s[i][j] > maxValue ? s[i][j] : maxValue;
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= i; j++) {
+			scanf("%d", &arr[i][j]);
+			arr[i][j] += max(arr[i - 1][j - 1], arr[i - 1][j]);
 		}
 	}
 
-	printf("%d\n", maxValue);
-
-
+	for (int i = 1; i <= n; i++) {
+		ans = max(ans, arr[n][i]);
+	}
+	printf("%d", ans);
 }
+
+/*
+arr[i][j] = i행 j열까지 내려왔을 때의 최댓값을 저장해줍니다.
+
+각 행에서 가장 왼쪽 값은, 바로 상위 행에서 가장 왼쪽 경로를 통해서만 내려올 수 있습니다.
+  -> arr[i][j] += arr[i-1][j];
+
+각 행에서 가장 오른쪽 값은, 바로 상위 행에서 가장 오른쪽 경로를 통해서만 내려올 수 있습니다.
+  -> arr[i][j] += arr[i-1][j-1];
+
+그 외의 값은, 바로 상위 행에서 왼쪽 경로와 오른쪽 경로를 통해서 내려올 수 있습니다.
+  -> arr[i][j] += max(arr[i-1][j], arr[i-1][j-1]);
+*/
