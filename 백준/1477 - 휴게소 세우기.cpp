@@ -16,16 +16,16 @@ int main() {
 	}
 	sort(arr.begin(), arr.end());
 
-	int s = 0, e = l;
+	int s = 1, e = l;
 	while (s <= e) {
 		int mid = (s + e) / 2;
 		int cnt = 0;
 		for (int i = 1; i < arr.size(); i++) {
 			int dist = arr[i] - arr[i - 1];
 			if (dist <= mid) continue;
-            // 두 지점 사이의 거리 dist에 세울 수 있는 휴게소의 개수
-            // dist % mid == 0이면 휴게소를 겹쳐서 세우는 것이므로 -1
-			cnt += dist / mid - (dist % mid == 0); 
+			// 두 지점 사이의 거리 dist에 세울 수 있는 휴게소의 개수
+			// dist % mid == 0이면 휴게소를 겹쳐서 세우는 것이므로 -1
+			cnt += dist / mid - (dist % mid == 0);
 		}
 		if (cnt > m) s = mid + 1;
 		else e = mid - 1;
