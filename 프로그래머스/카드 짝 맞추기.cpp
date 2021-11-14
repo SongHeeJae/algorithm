@@ -2,13 +2,15 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+#define INF 2147483647
 using namespace std;
 int dx[] = {-1,0,1,0};
 int dy[] = {0,-1,0,1};
 vector<pair<int, pair<int, int>>> cardPos;
 vector<pair<int, int>> selectPos; // 고른 카드 위치
+vector<vector<int>> temp(4, vector<int>(4));
 bool cardVisit[4] = {false};
-int answer = 987654321;
+int answer = INF;
 
 void copy(vector<vector<int>>& a, vector<vector<int>>& b) {
     for(int i=0; i<4; i++) {
@@ -37,19 +39,16 @@ int getMinDist(int sx, int sy, int ex, int ey, vector<vector<int>>& b) {
         if(x == ex && y == ey) return t;
         // 컨트롤키로 이동
         for(int i=0; i<4; i++) {
-            int nx = x;
-            int ny = y;
-            while(1) {
-                nx += dx[i];
-                ny += dy[i];
-                if(nx < 0 || ny < 0 || nx > 3 || ny > 3) {
-                    nx += dx[(i+2)%4]; // 초과했으면 한칸 후진해서
-                    ny += dy[(i+2)%4]; // 끝으로 보냄
-                    break;
-                }
-                if(b[nx][ny] != 0) break;
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if(nx < 0 || ny < 0 || nx > 3 || ny > 3) continue;
+            while(!b[nx][ny]) {
+                int nnx = nx + dx[i];
+                int nny = ny + dy[i];
+                if(nnx < 0 || nny < 0 || nnx > 3 || nny > 3) break;
+                nx = nnx;
+                ny = nny;
             }
-            if(nx == x && ny == y) continue;
             if(visit[nx][ny]) continue;
             visit[nx][ny] = true;
             q.push({t + 1,{nx, ny}});
@@ -69,7 +68,6 @@ int getMinDist(int sx, int sy, int ex, int ey, vector<vector<int>>& b) {
 
 void dfs(int d, vector<vector<int>>& board) {
     if(d == cardPos.size()) {
-        vector<vector<int>> temp(4, vector<int>(4));
         copy(temp, board);
         int dist = 0;
         for(int i=1; i<selectPos.size(); i+=2) {
@@ -79,7 +77,7 @@ void dfs(int d, vector<vector<int>>& board) {
             int ey = selectPos[i+1].second;
             int px = selectPos[i-1].first;
             int py = selectPos[i-1].second;
-            dist += getMinDist(px, py, sx, sy, temp); // 시작위치로 이동
+            dist += getMinDist(px, py, sx, sy, temp);
             dist += getMinDist(sx, sy, ex, ey, temp) + 2; // 엔터 두번
             temp[sx][sy] = temp[ex][ey] = 0;
         }
