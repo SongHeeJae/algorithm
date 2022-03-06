@@ -4,24 +4,21 @@ public:
         if(numRows == 1 || s.size() <= numRows) return s;
         
         string result;
-        result.resize(s.size());
-        
         int start = numRows * 2 - 2;
         int idx = 0, row = 0, flip = 0;
         int p[2] = {start, start};
         
-        int i = 0;
-        while(row < numRows) {
-            while(idx < s.size()) {
-                result[i++] = s[idx];
-                idx += p[flip];
-                flip = !flip;
+        for(char ch : s) {
+            result.push_back(s[idx]);
+            idx += p[flip];
+            flip = !flip;
+            if(idx >= s.size()) {
+                idx = ++row;
+                if(row == numRows - 1) p[0] = p[1] = start;
+                else if(row == 1) p[0] -= 2, p[1] = 2;
+                else p[0] -= 2, p[1] += 2;
+                flip = 0;
             }
-            idx = ++row;
-            flip = 0;
-            if(row == numRows - 1) p[0] = p[1] = start;
-            else if(row == 1) p[0] -= 2, p[1] = 2;
-            else p[0] -= 2, p[1] += 2;
         }
         return result;
     }
@@ -54,24 +51,20 @@ public:
         if(numRows == 1 || s.size() <= numRows) return s;
         
         string result;
-        result.resize(s.size());
-        
         int start = numRows * 2 - 2;
         int idx = 0, row = 0, flip = 0;
         int p[2] = {start, start};
-        
-        for(int i = 0; i<s.size(); i++) {
-            result[i] = s[idx];
-            idx += p[flip];
-            flip = !flip;
-            
-            if(idx >= s.size()) {
-                idx = ++row;
-                if(row == numRows - 1) p[0] = p[1] = start;
-                else if(row == 1) p[0] -= 2, p[1] = 2;
-                else p[0] -= 2, p[1] += 2;
-                flip = 0;
+        while(row < numRows) {
+            while(idx < s.size()) {
+                result.push_back(s[idx]);
+                idx += p[flip];
+                flip = !flip;
             }
+            idx = ++row;
+            flip = 0;
+            if(row == numRows - 1) p[0] = p[1] = start;
+            else if(row == 1) p[0] -= 2, p[1] = 2;
+            else p[0] -= 2, p[1] += 2;
         }
         return result;
     }
