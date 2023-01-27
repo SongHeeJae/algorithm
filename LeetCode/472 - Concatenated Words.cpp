@@ -26,16 +26,14 @@ public:
             return false;
         }
 
-        bool result = false;
-        
         string temp = "";
         for(int i=0; i<word.size(); i++) {
             temp.push_back(word[i]);
             if(wordSet.find(temp) == wordSet.end()) continue;
             string nxt = word.substr(i + 1);
-            result |= dfs(nxt, depth + 1);
+            if(dfs(nxt, depth + 1)) return true;
         }
 
-        return result;
+        return false;
     }
 };
