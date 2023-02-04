@@ -70,3 +70,34 @@ public:
     }
 };
 */
+
+
+/*
+규칙을 파악하면 문자열을 한 번 순회하며 변환된 문자열을 구할 수 있습니다.
+numRows == 1이라면, 주어진 문자열을 그대로 반환해줍니다.
+0행은 다음 알파벳까지 numRows * 2 - 2번 건너뛰면 됩니다.
+i행은 다음 알파벳까지 (numRows - i) * 2 - 2번, (i + 1) * 2 - 2번 번갈아가면서 건너뛰면 됩니다.
+(numRows -1)행은 다음 알파벳까지 numRows * 2- 2번 건너뛰면 됩니다.
+*/
+
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        if(numRows == 1) return s;
+
+        string result = "";
+        for(int i=0; i<numRows; i++) {
+            int d = (numRows - i) * 2 - 2;
+            int u = (i + 1) * 2 - 2;
+
+            if(i == 0) u = d;
+            else if(i == numRows - 1) d = u;
+
+            bool flag = true;
+            for(int j = i; j < s.size(); j += flag ? d : u, flag = !flag)
+                result.push_back(s[j]);
+        }
+
+        return result;
+    }
+};
