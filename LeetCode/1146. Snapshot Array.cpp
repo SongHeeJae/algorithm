@@ -1,8 +1,8 @@
 /*
 해시 테이블과 트리를 이용하여 풀 수 있었습니다.
 각 인덱스마다 snap_id에 대한 값을 정렬하여 저장해줍니다.
-snap_id에 대한 upper bound 수행 결과의 이전 snap_id를 검사해주면, 가장 최신 snap_id의 값을 구해올 수 있습니다. 
-*/
+snap_id에 대한 upper bound 수행 결과의 직전 스냅샷을 검사해주면, snap_id 이하의 가장 최신 스냅샷의 값을 구해올 수 있습니다.
+ */
 
 class SnapshotArray {
 public:
