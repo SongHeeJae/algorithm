@@ -39,7 +39,7 @@ public:
 
 /*
 이미 구해진 first를 이용하여 더욱 최적화할 수 있었습니다.
-target이 있음을 재차 확인하는 과정을 없애고, upper bound를 재수행해야하는 범위를 좁힐 수 있었습니다.
+target이 있음을 재차 확인하는 과정을 없애고, upper bound를 수행해야하는 범위를 좁힐 수 있었습니다.
 */
 
 class Solution {
