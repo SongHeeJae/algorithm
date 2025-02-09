@@ -1,6 +1,5 @@
 /*
 https://leetcode.com/problems/count-number-of-bad-pairs/
-
 j - i != nums[j] - nums[i] 조건을 이항해보면,
 nums[i] - i != nums[j] - j로 바꿔볼 수 있습니다.
 nums를 순회하면서, nums[i] - i의 카운트를 해시 테이블에 기억해줍니다.
